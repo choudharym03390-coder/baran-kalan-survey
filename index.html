@@ -1,130 +1,322 @@
 <!DOCTYPE html>
 <html lang="hi">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Baran Kalan Janmat Survey</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f1f5f9;
-      margin: 0;
-      padding: 20px;
-      color: #172033;
-    }
-    header {
-      background: #166534;
-      color: white;
-      padding: 24px 15px;
-      text-align: center;
-      border-radius: 16px;
-    }
-    .notice {
-      background: #fff7d6;
-      padding: 14px;
-      border-radius: 10px;
-      margin: 18px 0;
-      font-size: 14px;
-    }
-    .candidate {
-      background: white;
-      padding: 18px;
-      margin: 14px 0;
-      border-radius: 14px;
-      box-shadow: 0 2px 8px #00000010;
-    }
-    button {
-      background: #166534;
-      color: white;
-      border: 0;
-      padding: 12px 18px;
-      border-radius: 8px;
-      font-size: 16px;
-    }
-    #results {
-      background: white;
-      padding: 18px;
-      border-radius: 14px;
-      margin-top: 20px;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Baran Kalan | Demo Survey 2026</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f1f5f9;
+  color: #172033;
+}
+
+header {
+  background: linear-gradient(135deg, #064e3b, #15803d);
+  color: white;
+  padding: 35px 18px;
+  text-align: center;
+  border-radius: 0 0 25px 25px;
+}
+
+header .icon {
+  font-size: 45px;
+}
+
+header h1 {
+  margin: 10px 0;
+  font-size: 30px;
+}
+
+header p {
+  margin: 8px 0 0;
+  font-size: 16px;
+}
+
+.notice {
+  margin: 18px 16px;
+  padding: 14px;
+  background: #fef3c7;
+  color: #92400e;
+  border-radius: 12px;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+main {
+  max-width: 650px;
+  margin: auto;
+  padding: 0 15px 30px;
+}
+
+h2 {
+  margin-top: 28px;
+}
+
+.subtitle {
+  color: #64748b;
+  line-height: 1.6;
+}
+
+.candidate {
+  background: white;
+  margin: 16px 0;
+  padding: 20px;
+  border-radius: 18px;
+  box-shadow: 0 4px 15px #0000000a;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.avatar {
+  width: 72px;
+  height: 72px;
+  flex-shrink: 0;
+  border-radius: 16px;
+  background: #dcfce7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 38px;
+}
+
+.details {
+  flex: 1;
+}
+
+.details h3 {
+  margin: 0 0 7px;
+}
+
+.details p {
+  color: #64748b;
+  margin: 0 0 12px;
+  font-size: 13px;
+}
+
+button {
+  background: #166534;
+  color: white;
+  border: 0;
+  padding: 11px 16px;
+  border-radius: 9px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+button:disabled {
+  background: #94a3b8;
+  cursor: not-allowed;
+}
+
+.results {
+  background: white;
+  padding: 20px;
+  margin-top: 25px;
+  border-radius: 18px;
+  box-shadow: 0 4px 15px #0000000a;
+}
+
+.total {
+  font-size: 25px;
+  font-weight: bold;
+  color: #166534;
+}
+
+.result-row {
+  margin: 20px 0;
+}
+
+.result-label {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+.bar-bg {
+  height: 12px;
+  background: #e2e8f0;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.bar {
+  height: 100%;
+  width: 0;
+  background: #16a34a;
+  border-radius: 20px;
+  transition: width 0.3s;
+}
+
+.reset {
+  background: #475569;
+  margin-top: 12px;
+}
+
+footer {
+  text-align: center;
+  padding: 22px;
+  color: #64748b;
+  font-size: 13px;
+}
+
+@media (max-width: 380px) {
+  .candidate {
+    padding: 13px;
+    gap: 10px;
+  }
+
+  .avatar {
+    width: 55px;
+    height: 55px;
+    font-size: 30px;
+  }
+
+  button {
+    padding: 10px;
+  }
+}
+</style>
 </head>
+
 <body>
-  <header>
-    <h1>🗳️ Baran Kalan</h1>
-    <p>सरपंच चुनाव जनमत सर्वेक्षण 2026</p>
-  </header>
 
-  <div class="notice">
-    ⚠️ यह केवल एक डेमो जनमत सर्वेक्षण है।
-    यह आधिकारिक मतदान नहीं है। नीचे दिए गए वोट
-    केवल इसी डिवाइस पर डेमो के लिए सेव होंगे।
-  </div>
+<header>
+  <div class="icon">🗳️</div>
+  <h1>Baran Kalan</h1>
+  <p>गाँव की राय, गाँव के विकास के लिए</p>
+  <p>जनमत सर्वेक्षण 2026</p>
+</header>
 
-  <h2>उम्मीदवार चुनें</h2>
-  <p>अभी उम्मीदवारों के नाम जोड़ने बाकी हैं।</p>
+<div class="notice">
+  ⚠️ <b>केवल डेमो सर्वे</b><br>
+  यह एक अनौपचारिक जनमत सर्वेक्षण है, आधिकारिक मतदान नहीं।
+  वोट केवल इसी ब्राउज़र में डेमो के लिए गिने जाते हैं।
+</div>
 
-  <div id="candidates"></div>
+<main>
+  <h2>👥 उम्मीदवार चुनें</h2>
+  <p class="subtitle">
+    चार डेमो उम्मीदवारों में से किसी एक को चुनकर
+    सर्वेक्षण का परिणाम देख सकते हैं।
+  </p>
 
-  <div id="results">
-    <h2>📊 डेमो परिणाम</h2>
-    <p>कुल डेमो वोट: <strong id="total">0</strong></p>
-    <div id="scores"></div>
-  </div>
+  <section id="candidates"></section>
 
-  <script>
-    const candidates = [
-      { name: "उम्मीदवार 1", votes: 0 },
-      { name: "उम्मीदवार 2", votes: 0 },
-      { name: "उम्मीदवार 3", votes: 0 },
-      { name: "उम्मीदवार 4", votes: 0 }
-    ];
+  <section class="results">
+    <h2 style="margin-top:0">📊 डेमो परिणाम</h2>
+    <p>कुल डेमो वोट</p>
+    <div class="total" id="total">0</div>
+    <div id="results"></div>
 
-    const saved = localStorage.getItem("baranDemoVotes");
+    <button class="reset" onclick="resetVotes()">
+      डेमो रीसेट करें
+    </button>
+  </section>
+</main>
 
-    if (saved) {
-      const data = JSON.parse(saved);
-      candidates.forEach((c, i) => c.votes = data[i] || 0);
-    }
+<footer>
+  Baran Kalan • Community Opinion Demo<br>
+  केवल प्रदर्शन और अभ्यास के लिए
+</footer>
 
-    function render() {
-      const list = document.getElementById("candidates");
-      list.innerHTML = "";
+<script>
+const candidates = [
+  { name: "उम्मीदवार 1", emoji: "👨🏻‍🌾" },
+  { name: "उम्मीदवार 2", emoji: "👨🏻‍💼" },
+  { name: "उम्मीदवार 3", emoji: "🧑🏻‍🌾" },
+  { name: "उम्मीदवार 4", emoji: "👨🏻‍💻" }
+];
 
-      candidates.forEach((c, i) => {
-        list.innerHTML += `
-          <div class="candidate">
-            <h3>${c.name}</h3>
-            <button onclick="vote(${i})">डेमो वोट दें</button>
-          </div>`;
-      });
+let votes = [0, 0, 0, 0];
+let alreadyVoted = false;
 
-      const total = candidates.reduce((sum, c) => sum + c.votes, 0);
-      document.getElementById("total").textContent = total;
+const candidatesBox = document.getElementById("candidates");
 
-      document.getElementById("scores").innerHTML =
-        candidates.map(c => `
-          <p>${c.name}: ${c.votes} वोट</p>
-        `).join("");
-    }
+candidates.forEach((candidate, index) => {
+  candidatesBox.innerHTML += `
+    <article class="candidate">
+      <div class="avatar">${candidate.emoji}</div>
+      <div class="details">
+        <h3>${candidate.name}</h3>
+        <p>डेमो उम्मीदवार</p>
+        <button id="vote${index}"
+          onclick="castVote(${index})">
+          🗳️ डेमो वोट दें
+        </button>
+      </div>
+    </article>
+  `;
+});
 
-    function vote(index) {
-      if (localStorage.getItem("baranDemoUsed") === "yes") {
-        alert("इस डिवाइस के डेमो में पहले ही वोट दिया जा चुका है।");
-        return;
-      }
+function castVote(index) {
+  if (alreadyVoted) {
+    alert("आप इस डेमो में पहले ही वोट दे चुके हैं।");
+    return;
+  }
 
-      candidates[index].votes++;
-      localStorage.setItem(
-        "baranDemoVotes",
-        JSON.stringify(candidates.map(c => c.votes))
-      );
-      localStorage.setItem("baranDemoUsed", "yes");
-      render();
-      alert("डेमो वोट दर्ज हो गया!");
-    }
+  votes[index]++;
+  alreadyVoted = true;
 
-    render();
-  </script>
+  document.querySelectorAll('[id^="vote"]').forEach(button => {
+    button.disabled = true;
+  });
+
+  updateResults();
+  alert("आपका डेमो वोट दर्ज हो गया!");
+}
+
+function updateResults() {
+  const total = votes.reduce((sum, value) => sum + value, 0);
+  document.getElementById("total").textContent = total;
+
+  document.getElementById("results").innerHTML =
+    candidates.map((candidate, index) => {
+      const percentage = total
+        ? Math.round(votes[index] / total * 100)
+        : 0;
+
+      return `
+        <div class="result-row">
+          <div class="result-label">
+            <span>${candidate.name}</span>
+            <span>${votes[index]} वोट (${percentage}%)</span>
+          </div>
+          <div class="bar-bg">
+            <div class="bar" style="width:${percentage}%"></div>
+          </div>
+        </div>
+      `;
+    }).join("");
+}
+
+function resetVotes() {
+  if (!confirm("क्या आप डेमो परिणाम रीसेट करना चाहते हैं?")) {
+    return;
+  }
+
+  votes = [0, 0, 0, 0];
+  alreadyVoted = false;
+
+  document.querySelectorAll('[id^="vote"]').forEach(button => {
+    button.disabled = false;
+  });
+
+  updateResults();
+}
+
+updateResults();
+</script>
+
 </body>
 </html>
