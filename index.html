@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Baran Kalan Janmat Survey</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f1f5f9;
+      margin: 0;
+      padding: 20px;
+      color: #172033;
+    }
+    header {
+      background: #166534;
+      color: white;
+      padding: 24px 15px;
+      text-align: center;
+      border-radius: 16px;
+    }
+    .notice {
+      background: #fff7d6;
+      padding: 14px;
+      border-radius: 10px;
+      margin: 18px 0;
+      font-size: 14px;
+    }
+    .candidate {
+      background: white;
+      padding: 18px;
+      margin: 14px 0;
+      border-radius: 14px;
+      box-shadow: 0 2px 8px #00000010;
+    }
+    button {
+      background: #166534;
+      color: white;
+      border: 0;
+      padding: 12px 18px;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+    #results {
+      background: white;
+      padding: 18px;
+      border-radius: 14px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🗳️ Baran Kalan</h1>
+    <p>सरपंच चुनाव जनमत सर्वेक्षण 2026</p>
+  </header>
+
+  <div class="notice">
+    ⚠️ यह केवल एक डेमो जनमत सर्वेक्षण है।
+    यह आधिकारिक मतदान नहीं है। नीचे दिए गए वोट
+    केवल इसी डिवाइस पर डेमो के लिए सेव होंगे।
+  </div>
+
+  <h2>उम्मीदवार चुनें</h2>
+  <p>अभी उम्मीदवारों के नाम जोड़ने बाकी हैं।</p>
+
+  <div id="candidates"></div>
+
+  <div id="results">
+    <h2>📊 डेमो परिणाम</h2>
+    <p>कुल डेमो वोट: <strong id="total">0</strong></p>
+    <div id="scores"></div>
+  </div>
+
+  <script>
+    const candidates = [
+      { name: "उम्मीदवार 1", votes: 0 },
+      { name: "उम्मीदवार 2", votes: 0 },
+      { name: "उम्मीदवार 3", votes: 0 },
+      { name: "उम्मीदवार 4", votes: 0 }
+    ];
+
+    const saved = localStorage.getItem("baranDemoVotes");
+
+    if (saved) {
+      const data = JSON.parse(saved);
+      candidates.forEach((c, i) => c.votes = data[i] || 0);
+    }
+
+    function render() {
+      const list = document.getElementById("candidates");
+      list.innerHTML = "";
+
+      candidates.forEach((c, i) => {
+        list.innerHTML += `
+          <div class="candidate">
+            <h3>${c.name}</h3>
+            <button onclick="vote(${i})">डेमो वोट दें</button>
+          </div>`;
+      });
+
+      const total = candidates.reduce((sum, c) => sum + c.votes, 0);
+      document.getElementById("total").textContent = total;
+
+      document.getElementById("scores").innerHTML =
+        candidates.map(c => `
+          <p>${c.name}: ${c.votes} वोट</p>
+        `).join("");
+    }
+
+    function vote(index) {
+      if (localStorage.getItem("baranDemoUsed") === "yes") {
+        alert("इस डिवाइस के डेमो में पहले ही वोट दिया जा चुका है।");
+        return;
+      }
+
+      candidates[index].votes++;
+      localStorage.setItem(
+        "baranDemoVotes",
+        JSON.stringify(candidates.map(c => c.votes))
+      );
+      localStorage.setItem("baranDemoUsed", "yes");
+      render();
+      alert("डेमो वोट दर्ज हो गया!");
+    }
+
+    render();
+  </script>
+</body>
+</html>
